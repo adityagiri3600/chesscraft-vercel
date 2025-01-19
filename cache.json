@@ -1,0 +1,1 @@
+{"white_pawn:white_pawn:1.4142135623730951": "{\n  \"jump\": [\n    [0, 1]\n  ],\n  \"direction\": [],\n   \"capture\":{\n    \"jump\": [[1, 1], [-1, 1]]\n   },\n  \"emoji\": \"\ud83c\udf31\",\n  \"name\": \"Seedling\",\n  \"description\": \"A young sprout, it can only move forward one step and capture diagonally. A humble start.\"\n}\n"}
