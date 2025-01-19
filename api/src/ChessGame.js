@@ -332,7 +332,8 @@ const ChessGame = () => {
             textAlign: "center",
             fontSize: window.innerWidth > 500 ? "1.5rem" : "1rem",
           }}>
-            <p>{boardState[selectedIndex].image} {boardState[selectedIndex].name}</p>
+            <p style={{fontSize: "4rem", width:"80px", margin: "auto"}}>{boardState[selectedIndex].image}</p>
+            <p>{boardState[selectedIndex].name}</p>
             <p>{boardState[selectedIndex].description}</p>
             <div style={{
               textAlign: "left",
