@@ -2,6 +2,8 @@
 
 ### Chess But You Can Combine Your Pieces
 
+https://chesscraft.vercel.app/
+
 ![gameplay photo](images/gameplay_photo.png)
 
 ## 🎮 Features
