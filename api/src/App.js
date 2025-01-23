@@ -1,5 +1,6 @@
 import React from 'react';
 import ChessGame from './ChessGame';
+import { Analytics } from "@vercel/analytics/react"
 import './Appcss.css';
 
 function App() {
