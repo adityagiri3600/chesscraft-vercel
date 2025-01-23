@@ -123,3 +123,70 @@ export const pieces = {
     )
   }
 };
+
+// Override the pawn isValidMove function to include the initial double move
+pieces.w.pawn.isValidMove = function (start, end, boardState) {
+  const deltaX = (end % 8) - (start % 8);
+  const deltaY = Math.floor(start / 8) - Math.floor(end / 8);
+
+  // Initial pawn double move
+  if (start > 47 && deltaX === 0 && deltaY === 2 && boardState[end] === "") {
+    return true;
+  }
+
+  let jumpMoves = this.moves.jump; // Access this.moves correctly
+  for (let i = 0; i < jumpMoves.length; i++) {
+    const element = jumpMoves[i];
+    if (element[0] === deltaX && element[1] === deltaY) {
+      return true;
+    }
+  }
+  let directionMoves = this.moves.direction || [];
+  for (let i = 0; i < directionMoves.length; i++) {
+    const element = directionMoves[i];
+    for (let scalar = 1; scalar < 8; scalar++) {
+      const targetIndex = start + element[0] * scalar - element[1] * scalar * 8;
+      if (boardState[targetIndex] !== "") {
+        break;
+      }
+      if (deltaX === element[0] * scalar && deltaY === element[1] * scalar) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+};
+
+pieces.b.pawn.isValidMove = function (start, end, boardState) {
+  const deltaX = (end % 8) - (start % 8);
+  const deltaY = Math.floor(start / 8) - Math.floor(end / 8);
+
+  // Initial pawn double move
+  if (start < 16 && deltaX === 0 && deltaY === -2 && boardState[end] === "") {
+    return true;
+  }
+
+  let jumpMoves = this.moves.jump; // Access this.moves correctly
+  for (let i = 0; i < jumpMoves.length; i++) {
+    const element = jumpMoves[i];
+    if (element[0] === deltaX && element[1] === deltaY) {
+      return true;
+    }
+  }
+  let directionMoves = this.moves.direction || [];
+  for (let i = 0; i < directionMoves.length; i++) {
+    const element = directionMoves[i];
+    for (let scalar = 1; scalar < 8; scalar++) {
+      const targetIndex = start + element[0] * scalar - element[1] * scalar * 8;
+      if (boardState[targetIndex] !== "") {
+        break;
+      }
+      if (deltaX === element[0] * scalar && deltaY === element[1] * scalar) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
