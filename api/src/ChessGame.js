@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { pieces as p, Piece } from "./Piece";
+import { runPieceCode } from "./RunPython";
 
 const Square = ({ piece, color, handleClick, isSelected, validMoveSquare, validCaptureMoveSquare }) => {
   return (
@@ -40,7 +41,7 @@ async function combine(piece_one, piece_two, strength) {
     strength: strength
   };
   try {
-    const response = await fetch("/ask", {
+    const response = await fetch("http://127.0.0.1:5000/ask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -58,7 +59,7 @@ async function combine(piece_one, piece_two, strength) {
       result.emoji,
       piece_one.side,
       result.description,
-      result
+      result.moves
     )
     return piece;
   } catch (error) {
@@ -194,6 +195,7 @@ const ChessGame = () => {
                 updatedBoardState[i] = boardState[selectedIndex];
                 updatedBoardState[selectedIndex] = "";
                 setBoardState(updatedBoardState);
+                runPieceCode(piece, selectedIndex, i, updatedBoardState, setBoardState);
                 // promotion
                 if ((piece.side === "white" && i < 8)||(piece.side === "black" && i > 55)) {
                   promote(i, piece, setBoardState);

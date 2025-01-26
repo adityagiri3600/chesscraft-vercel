@@ -5,6 +5,12 @@ export class Piece {
     this.side = side;
     this.description = description;
     this.moves = moves;
+    // initialize missing fields in moves to empty arrays
+    this.moves.jump = this.moves.jump || [];
+    this.moves.direction = this.moves.direction || [];
+    this.moves.capture = this.moves.capture || this.moves;
+    this.moves.capture.jump = this.moves.capture.jump || [];
+    this.moves.capture.direction = this.moves.capture.direction || [];
   }
   isValidMove = (start, end, boardState) => {
     const deltaX = (end % 8) - (start % 8);
@@ -52,6 +58,14 @@ export class Piece {
       }
     }
   };
+  static fromObject = (obj) => {
+    let piece = new Piece(obj.name, obj.image, obj.side, obj.description, obj.moves);
+    // give each attribute of obj to piece
+    for (let key in obj) {
+      piece[key] = obj[key];
+    }
+    return piece;
+  }
 }
 
 // export pieces
@@ -157,6 +171,7 @@ pieces.w.pawn.isValidMove = function (start, end, boardState) {
 
   return false;
 };
+pieces.w.pawn.code = "if piece['side'] == 'white':\n    for i in range(len(boardState)):\n        if boardState[i] != '' and boardState[i]['side'] == 'white' and boardState[i]['name'] == 'Phalanx':\n            continue\n        elif boardState[i] != '' and boardState[i]['side'] == 'white':\n            boardState[i]['moves']['jump'].append([0,1])\n            boardState[i]['moves']['jump'].append([0,2])\n            boardState[i]['moves']['capture']['jump'].append([1,1])\n            boardState[i]['moves']['capture']['jump'].append([-1,1])\n            boardState[i]['moves']['capture']['jump'].append([2,1])\n            boardState[i]['moves']['capture']['jump'].append([-2,1])\n            boardState[i]['moves']['capture']['jump'].append([1,2])\n            boardState[i]['moves']['capture']['jump'].append([-1,2])\n            boardState[i]['moves']['capture']['jump'].append([2,2])\n            boardState[i]['moves']['capture']['jump'].append([-2,2])\nelse:\n    for i in range(len(boardState)):\n        if boardState[i] != '' and boardState[i]['side'] == 'black' and boardState[i]['name'] == 'Phalanx':\n            continue\n        elif boardState[i] != '' and boardState[i]['side'] == 'black':\n            boardState[i]['moves']['jump'].append([0,1])\n            boardState[i]['moves']['jump'].append([0,2])\n            boardState[i]['moves']['capture']['jump'].append([1,1])\n            boardState[i]['moves']['capture']['jump'].append([-1,1])\n            boardState[i]['moves']['capture']['jump'].append([2,1])\n            boardState[i]['moves']['capture']['jump'].append([-2,1])\n            boardState[i]['moves']['capture']['jump'].append([1,2])\n            boardState[i]['moves']['capture']['jump'].append([-1,2])\n            boardState[i]['moves']['capture']['jump'].append([2,2])\n            boardState[i]['moves']['capture']['jump'].append([-2,2])"
 
 pieces.b.pawn.isValidMove = function (start, end, boardState) {
   const deltaX = (end % 8) - (start % 8);
